@@ -59,9 +59,9 @@ To:
 ### Glider
 
 ```
- . O .
- . . O
- O O O
+    ()
+      ()
+  ()()()
 ```
 
 Replicates diagonally across the board.
@@ -69,9 +69,9 @@ Replicates diagonally across the board.
 ### Blinker
 
 ```
- . O .
- . O .
- . . .
+  ()
+  ()
+  ()
 ```
 
 Oscillates between vertical and horizontal.
@@ -79,9 +79,9 @@ Oscillates between vertical and horizontal.
 ### R-Pentomino
 
 ```
-  O O
- O O
-  O  
+    ()()
+  ()()
+    ()
 ```
 
 Small pattern with complex evolution.
@@ -89,9 +89,9 @@ Small pattern with complex evolution.
 ### Diehard
 
 ```
-       O
- O O
-  O   O O O
+              ()
+  ()() 
+    ()      ()()()
 ```
 
 Eventually disappears after 130 generations.
@@ -99,9 +99,9 @@ Eventually disappears after 130 generations.
 ### Pentadecathlon
 
 ```
-    O     O
- O O   O O O O O O
-    O     O
+      ()        ()
+  ()()  ()()()()  ()()
+      ()        ()
 ```
 
 Oscillator with period 15.
