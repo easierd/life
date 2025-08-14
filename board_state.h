@@ -38,3 +38,12 @@ void blinker(Board* b, size_t i, size_t j);
  *
  */
 void r_pentomino(Board* b, size_t i, size_t j);
+
+/* insert a Diehard into the board at position i, j
+ *
+ *                ()
+ *    ()() 
+ *      ()      ()()()
+ *
+ */
+void diehard(Board* b, size_t i, size_t j);

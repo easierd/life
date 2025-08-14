@@ -40,7 +40,7 @@ void blinker(Board* b, size_t i, size_t j) {
 }
 
 
-#define R_PENTOMINO_WIDTH 1
+#define R_PENTOMINO_WIDTH 3
 #define R_PENTOMINO_HEIGHT 3
 
 void r_pentomino(Board* b, size_t i, size_t j) {
@@ -52,6 +52,24 @@ void r_pentomino(Board* b, size_t i, size_t j) {
     set_alive(b, i + 1, j + 1);
 
     set_alive(b, i + 2, j + 1);
+    }
+}
+
+
+#define DIEHARD_WIDTH 8
+#define DIEHARD_HEIGHT 3
+
+void diehard(Board* b, size_t i, size_t j) {
+    if (is_valid_position(b, i, j, DIEHARD_WIDTH, DIEHARD_HEIGHT)) {
+    set_alive(b, i, j + 6);
+
+    set_alive(b, i + 1, j);
+    set_alive(b, i + 1, j + 1);
+
+    set_alive(b, i + 2, j + 1);
+    set_alive(b, i + 2, j + 5);
+    set_alive(b, i + 2, j + 6);
+    set_alive(b, i + 2, j + 7);
     }
 }
 

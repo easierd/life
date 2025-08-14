@@ -8,7 +8,7 @@
 
 #define ITERATIONS 10000
 
-struct timespec iter_intv =  {0, 8000000L};
+struct timespec iter_intv =  {0, 110000000L};
 
 
 int main(void) {
@@ -19,9 +19,7 @@ int main(void) {
         return EXIT_FAILURE;
     }
 
-    blinker(&b, b.rows/2, b.cols/2);
-    glider(&b, b.rows / 3, b.cols/2);
-    r_pentomino(&b, b.rows / 2, b.cols / 3);
+    diehard(&b, b.rows / 2, b.cols / 2);
 
     screen_print_board(&b);
     for (int i = 0; i < ITERATIONS; i++) {
