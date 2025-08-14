@@ -18,6 +18,6 @@ void iteration(Board*);
 
 void board_free(Board*);
 
-bool board_is_alive(Board*, size_t, size_t);
+bool board_is_alive(const Board*, size_t, size_t);
 
 void set_alive(Board*, size_t, size_t);

@@ -5,7 +5,14 @@
 
 #include "screen.h"
 
+
+#define COMMAND_SZ 64
+
+
 struct winsize w;
+
+char command[COMMAND_SZ]; 
+
 
 void screen_init() {
     write(STDIN_FILENO, "\x1b[2J", 4);
@@ -14,6 +21,7 @@ void screen_init() {
 
     ioctl(STDIN_FILENO, TIOCGWINSZ, &w);
 }
+
 
 void clear_screen() {
     write(STDIN_FILENO, "\x1b[0m", 4);        
@@ -50,18 +58,9 @@ void put_cell(int i, int j) {
         int jdigits = digits(screen_col);
 
         size_t str_command_sz = idigits + jdigits + 7;
-        char* command = malloc(str_command_sz);
-
-        // If the function returns without printing, it'll result in an acceptable
-        // flickering effect for that given iteration.
-        if (command == NULL) {
-            fprintf(stderr, "Unable to allocate memory for the print command\n");
-            return;
-        }
         snprintf(command, str_command_sz, "\x1b[%d;%dH  ", screen_row, screen_col);
 
         write(STDIN_FILENO, command, str_command_sz - 1);
-        free(command);
     }
 }
 
@@ -73,7 +72,7 @@ void erase_cell(int i, int j) {
 }
 
 
-void screen_print_board(Board* b) {
+void screen_print_board(const Board* b) {
     int rows = b->rows;
     int cols = b->cols;
     

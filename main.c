@@ -20,6 +20,7 @@ int main(void) {
     }
 
     glider(&b, b.rows / 2, b.cols/2);
+    glider(&b, b.rows / 3, b.cols/2);
 
     screen_print_board(&b);
     for (int i = 0; i < ITERATIONS; i++) {

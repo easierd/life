@@ -22,6 +22,7 @@ bool board_init(Board* b, size_t rows, size_t cols) {
 
     b->prev_state = calloc(rows * cols, sizeof(bool));
     if (b->prev_state == NULL) {
+        free(b->cells);
         print_alloc_error();
         return false;
     }
@@ -83,10 +84,9 @@ void board_free(Board* b) {
 }
 
 
-bool board_is_alive(Board* b, size_t i, size_t j) {
+bool board_is_alive(const Board* b, size_t i, size_t j) {
     return b->cells[i * b->cols + j];
 }
-
 
 
 void set_alive(Board* b, size_t i, size_t j) {
