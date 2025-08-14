@@ -19,7 +19,7 @@ int main(void) {
         return EXIT_FAILURE;
     }
 
-    diehard(&b, b.rows / 2, b.cols / 2);
+    pentadecathlon(&b, b.rows / 2, b.cols / 2);
 
     screen_print_board(&b);
     for (int i = 0; i < ITERATIONS; i++) {

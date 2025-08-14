@@ -73,3 +73,25 @@ void diehard(Board* b, size_t i, size_t j) {
     }
 }
 
+
+#define PENTADECATHLON_WIDTH 10
+#define PENTADECATHLON_HEIGHT 3
+
+void pentadecathlon(Board* b, size_t i, size_t j) {
+    if (is_valid_position(b, i, j, PENTADECATHLON_WIDTH , PENTADECATHLON_HEIGHT)) {
+        set_alive(b, i, j + 2);
+        set_alive(b, i, j + 7);
+
+        set_alive(b, i + 1, j);
+        set_alive(b, i + 1, j + 1);
+        set_alive(b, i + 1, j + 3);
+        set_alive(b, i + 1, j + 4);
+        set_alive(b, i + 1, j + 5);
+        set_alive(b, i + 1, j + 6);
+        set_alive(b, i + 1, j + 8);
+        set_alive(b, i + 1, j + 9);
+        
+        set_alive(b, i + 2, j + 2);
+        set_alive(b, i + 2, j + 7);
+    }
+}
