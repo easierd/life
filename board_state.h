@@ -18,3 +18,23 @@
  *
  */
 void glider(Board* b, size_t i, size_t j);
+
+
+/* insert a blinker into the board at position i, j
+ *
+ *      ()
+ *      ()
+ *      ()
+ *
+ */
+void blinker(Board* b, size_t i, size_t j);
+
+
+/* insert a R-pentomimo into the board at position i, j
+ *
+ *      ()()
+ *    ()()
+ *      ()
+ *
+ */
+void r_pentomino(Board* b, size_t i, size_t j);

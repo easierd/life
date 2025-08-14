@@ -6,9 +6,9 @@
 #include "board_state.h"
 #include"screen.h"
 
-#define ITERATIONS 100
+#define ITERATIONS 10000
 
-struct timespec iter_intv =  {0, 100000000L};
+struct timespec iter_intv =  {0, 8000000L};
 
 
 int main(void) {
@@ -19,8 +19,9 @@ int main(void) {
         return EXIT_FAILURE;
     }
 
-    glider(&b, b.rows / 2, b.cols/2);
+    blinker(&b, b.rows/2, b.cols/2);
     glider(&b, b.rows / 3, b.cols/2);
+    r_pentomino(&b, b.rows / 2, b.cols / 3);
 
     screen_print_board(&b);
     for (int i = 0; i < ITERATIONS; i++) {

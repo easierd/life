@@ -3,28 +3,55 @@
 
 #include "board_state.h"
 
+bool is_valid_position(Board*b, size_t i, size_t j, size_t width, size_t height) {
+    return (i < b->rows - height) && (j < b->cols - width);
+}
+
 
 #define GLIDER_WIDTH 3
 #define GLIDER_HEIGHT 3
 
-
 void glider(Board* b, size_t i, size_t j) {
-    size_t rows = b->rows;
-    size_t cols = b->cols;
+    if (is_valid_position(b, i, j, GLIDER_WIDTH, GLIDER_HEIGHT)) {
+        set_alive(b, i, j + 1);
 
-    if (i >= rows - GLIDER_HEIGHT || j >= cols - GLIDER_WIDTH) {
-        // TODO: keep a line for stderr messages
-        fprintf(stderr, "Cannot draw a glider at position %zu:%zu\n", i, j);
-        return;
+        set_alive(b, i + 1, j + 2);
+
+        set_alive(b, i + 2, j);
+        set_alive(b, i + 2, j + 1);
+        set_alive(b, i + 2, j + 2);
     }
 
-    set_alive(b, i, j + 1);
+}
 
-    set_alive(b, i + 1, j + 2);
+
+#define BLINKER_WIDTH 1
+#define BLINKER_HEIGHT 3
+
+void blinker(Board* b, size_t i, size_t j) {
+    if (is_valid_position(b, i, j, BLINKER_WIDTH, BLINKER_HEIGHT)) {
+    set_alive(b, i, j);
+
+    set_alive(b, i + 1, j);
 
     set_alive(b, i + 2, j);
-    set_alive(b, i + 2, j + 1);
-    set_alive(b, i + 2, j + 2);
+    }
 
+}
+
+
+#define R_PENTOMINO_WIDTH 1
+#define R_PENTOMINO_HEIGHT 3
+
+void r_pentomino(Board* b, size_t i, size_t j) {
+    if (is_valid_position(b, i, j, R_PENTOMINO_WIDTH, R_PENTOMINO_HEIGHT)) {
+    set_alive(b, i, j + 1);
+    set_alive(b, i, j + 2);
+
+    set_alive(b, i + 1, j);
+    set_alive(b, i + 1, j + 1);
+
+    set_alive(b, i + 2, j + 1);
+    }
 }
 
