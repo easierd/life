@@ -1,32 +1,32 @@
 #include "board.h"
 
 #include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
 
-void board_init(Board* b, size_t rows, size_t cols) {
+
+void print_alloc_error() {
+    fprintf(stderr, "Cannot allocate memory");
+    perror(NULL);
+}
+
+
+bool board_init(Board* b, size_t rows, size_t cols) {
     b->rows = rows;
     b->cols = cols;
-    b->cells = (bool*) malloc(sizeof(bool) * rows * cols);
-    for (size_t i = 0; i < rows; i++) {
-        for(size_t j = 0; j < cols; j++) {
-            b->cells[i * cols + j] = false;
-        }
+    b->cells = calloc(rows * cols, sizeof(bool));
+    if (b->cells == NULL) {
+        print_alloc_error();
+        return false;
     }
 
-    b->cells[cols-1] = true;
-    b->cells[cols-2] = true;
-    b->cells[cols + cols - 1] = true;
-    b->cells[cols + cols - 2] = true;
+    b->prev_state = calloc(rows * cols, sizeof(bool));
+    if (b->prev_state == NULL) {
+        print_alloc_error();
+        return false;
+    }
 
-    b->cells[(rows / 3) * cols + cols/3] = true;
-    b->cells[(rows / 3) * cols + cols/3 + 1] = true;
-    b->cells[(rows / 3 + 1) * cols + cols/3] = true;
-    b->cells[(rows / 3 + 1) * cols + cols/3 + 1] = true;
-
-    b->cells[(rows / 2) * cols + cols/2] = true;
-    b->cells[(rows / 2 - 2) * cols + cols/2] = true;
-    b->cells[(rows / 2) * cols + cols/2 + 1] = true;
-    b->cells[(rows / 2 - 1) * cols + cols/2 + 1] = true;
-    b->cells[(rows / 2) * cols + cols/2 - 1] = true;
+    return true;
 }
 
 
@@ -51,17 +51,16 @@ int alive_neighbours(bool* prev_state, size_t rows, size_t cols, size_t i, size_
 } 
 
 
+// invariant: prev_state is always equal to cells
 void iteration(Board* b) {
-    bool *prev_state = (bool*) malloc(sizeof(bool) * b->rows * b->cols);
-    for (size_t i = 0; i < b->rows; i++) {
-        for (size_t j = 0; j < b->cols; j++) {
-           prev_state[i * b->cols + j]  = b->cells[i * b->cols + j];
-        }
+    if (b->prev_state == NULL) {
+        return;
     }
+
 
     for (size_t i = 0; i < b->rows; i++) {
         for (size_t j = 0; j < b->cols; j++) {
-            int neighbours = alive_neighbours(prev_state, b->rows, b->cols, i, j);
+            int neighbours = alive_neighbours(b->prev_state, b->rows, b->cols, i, j);
             if (board_is_alive(b, i, j)) {
                 if (neighbours < 2 || neighbours > 3) {
                     b->cells[i * b->cols + j] = false;
@@ -74,16 +73,28 @@ void iteration(Board* b) {
         }
     }
 
-    free(prev_state);
+    memcpy(b->prev_state, b->cells, b->rows * b->cols * sizeof(bool));
 }
 
 
 void board_free(Board* b) {
     free(b->cells);
+    free(b->prev_state);
 }
 
 
-bool board_is_alive(Board* b, int i, int j) {
+bool board_is_alive(Board* b, size_t i, size_t j) {
     return b->cells[i * b->cols + j];
 }
 
+
+
+void set_alive(Board* b, size_t i, size_t j) {
+    if ((i >= b->rows) || (j >= b->cols)) {
+        fprintf(stderr, "Position %zu,%zu is out of bound\n", i, j);
+        return;
+    }
+
+    b->cells[i * b->cols + j] = true;
+    b->prev_state[i * b->cols + j] = true;
+}

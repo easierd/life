@@ -44,23 +44,29 @@ int digits(int i) {
 
 void put_cell(int i, int j) {
     if ((i >= 0) && (j >= 0) && (i < winrows()) && ( j < wincols())) {
-        int idigits = digits(i + 1);
-        int jdigits = digits(2 * j + 1);
+        int screen_row = i + 1;
+        int screen_col = 2 * j + 1;
+        int idigits = digits(screen_row);
+        int jdigits = digits(screen_col);
 
-        size_t str_command_sz = idigits + jdigits + 4 + 1;
+        size_t str_command_sz = idigits + jdigits + 7;
         char* command = malloc(str_command_sz);
-        snprintf(command, str_command_sz, "\x1b[%d;%dH", i + 1, 2 * j + 1);
+
+        // If the function returns without printing, it'll result in an acceptable
+        // flickering effect for that given iteration.
+        if (command == NULL) {
+            fprintf(stderr, "Unable to allocate memory for the print command\n");
+            return;
+        }
+        snprintf(command, str_command_sz, "\x1b[%d;%dH  ", screen_row, screen_col);
 
         write(STDIN_FILENO, command, str_command_sz - 1);
-        write(STDIN_FILENO, "  ", 2);
         free(command);
-        write(STDIN_FILENO, "\x1b[H", 3);
     }
 }
 
 
 void erase_cell(int i, int j) {
-    
     write(STDIN_FILENO, "\x1b[0m", 4);        
     put_cell(i, j);
     write(STDIN_FILENO, "\x1b[42m", 5);        

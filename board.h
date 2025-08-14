@@ -5,13 +5,19 @@
 
 typedef struct {
    bool* cells; 
+   bool* prev_state;
    size_t rows;
    size_t cols;
 } Board;
 
 
-void board_init(Board*, size_t, size_t);
+// return true if initialization is successful
+bool board_init(Board*, size_t, size_t);
+
 void iteration(Board*);
+
 void board_free(Board*);
 
-bool board_is_alive(Board*, int, int);
+bool board_is_alive(Board*, size_t, size_t);
+
+void set_alive(Board*, size_t, size_t);
