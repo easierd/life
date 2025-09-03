@@ -95,3 +95,58 @@ void pentadecathlon(Board* b, size_t i, size_t j) {
         set_alive(b, i + 2, j + 7);
     }
 }
+
+
+#define GOSPER_GLIDER_GUN_WIDTH 36
+#define GOSPER_GLIDER_GUN_HEIGHT 9
+
+void gosper_glider_gun(Board *b, size_t i, size_t j) {
+    if (is_valid_position(b, i, j, GOSPER_GLIDER_GUN_WIDTH, GOSPER_GLIDER_GUN_HEIGHT)) {
+        set_alive(b, i, j + 24);
+
+        set_alive(b, i + 1, j + 22);
+        set_alive(b, i + 1, j + 24);
+
+        set_alive(b, i + 2, j + 12);
+        set_alive(b, i + 2, j + 13);
+        set_alive(b, i + 2, j + 20);
+        set_alive(b, i + 2, j + 21);
+        set_alive(b, i + 2, j + 34);
+        set_alive(b, i + 2, j + 35);
+
+        set_alive(b, i + 3, j + 11);
+        set_alive(b, i + 3, j + 15);
+        set_alive(b, i + 3, j + 20);
+        set_alive(b, i + 3, j + 21);
+        set_alive(b, i + 3, j + 34);
+        set_alive(b, i + 3, j + 35);
+
+        set_alive(b, i + 4, j);
+        set_alive(b, i + 4, j + 1);
+        set_alive(b, i + 4, j + 10);
+        set_alive(b, i + 4, j + 16);
+        set_alive(b, i + 4, j + 20);
+        set_alive(b, i + 4, j + 21);
+
+        set_alive(b, i + 5, j);
+        set_alive(b, i + 5, j + 1);
+        set_alive(b, i + 5, j + 10);
+        set_alive(b, i + 5, j + 14);
+        set_alive(b, i + 5, j + 16);
+        set_alive(b, i + 5, j + 17);
+        set_alive(b, i + 5, j + 22);
+        set_alive(b, i + 5, j + 24);
+
+        set_alive(b, i + 6, j + 10);
+        set_alive(b, i + 6, j + 16);
+        set_alive(b, i + 6, j + 24);
+
+        set_alive(b, i + 7, j + 11);
+        set_alive(b, i + 7, j + 15);
+
+        set_alive(b, i + 8, j + 12);
+        set_alive(b, i + 8, j + 13);
+
+    }
+}
+

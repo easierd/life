@@ -59,6 +59,23 @@ void diehard(Board* b, size_t i, size_t j);
 void pentadecathlon(Board* b, size_t i, size_t j);
 
 
+/*
+ * Insert a Gosper glider gun.
+ *
+ *                                                 ()
+ *                                             ()  ()
+ *                         ()()            ()()                        ()()
+ *                       ()      ()        ()()                        ()()
+ * ()()                ()          ()      ()()
+ * ()()                ()      ()  ()()        ()  ()
+ *                     ()          ()              ()
+ *                       ()      ()
+ *                         ()()
+ *
+ */
+void gosper_glider_gun(Board *b, size_t i, size_t j);
+
+
 
 
 
