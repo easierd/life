@@ -1,3 +1,4 @@
+#include<assert.h>
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -8,18 +9,30 @@ bool is_valid_position(Board*b, size_t i, size_t j, size_t width, size_t height)
 }
 
 
-#define GLIDER_WIDTH 3
-#define GLIDER_HEIGHT 3
+void glider(Board* b, size_t i, size_t j, bool h_mirror) {
 
-void glider(Board* b, size_t i, size_t j) {
-    if (is_valid_position(b, i, j, GLIDER_WIDTH, GLIDER_HEIGHT)) {
-        set_alive(b, i, j + 1);
+    size_t w = 3;
+    size_t h = 3;
+    int offsets[][2] = {
+        {0, 1},
+        {1, 2},
+        {2, 0},
+        {2, 1},
+        {2, 2},
+    };
 
-        set_alive(b, i + 1, j + 2);
+    size_t cells = sizeof(offsets) / sizeof(int[2]);
 
-        set_alive(b, i + 2, j);
-        set_alive(b, i + 2, j + 1);
-        set_alive(b, i + 2, j + 2);
+    if (h_mirror) {
+        for (size_t k = 0; k < cells; k++) {
+            offsets[k][1] = w - 1 - offsets[k][1];
+        }
+    }
+
+    if (is_valid_position(b, i, j, w, h)) {
+        for (size_t k = 0; k < cells; k++) {
+            set_alive(b, i + offsets[k][0], j + offsets[k][1]);
+        }
     }
 
 }
@@ -100,53 +113,77 @@ void pentadecathlon(Board* b, size_t i, size_t j) {
 #define GOSPER_GLIDER_GUN_WIDTH 36
 #define GOSPER_GLIDER_GUN_HEIGHT 9
 
-void gosper_glider_gun(Board *b, size_t i, size_t j) {
-    if (is_valid_position(b, i, j, GOSPER_GLIDER_GUN_WIDTH, GOSPER_GLIDER_GUN_HEIGHT)) {
-        set_alive(b, i, j + 24);
+void gosper_glider_gun(Board *b, size_t i, size_t j, bool h_mirror) {
 
-        set_alive(b, i + 1, j + 22);
-        set_alive(b, i + 1, j + 24);
+    size_t h = 36;
+    size_t w = 9;
+    int offsets[][2] = {
+        {0, 24},
 
-        set_alive(b, i + 2, j + 12);
-        set_alive(b, i + 2, j + 13);
-        set_alive(b, i + 2, j + 20);
-        set_alive(b, i + 2, j + 21);
-        set_alive(b, i + 2, j + 34);
-        set_alive(b, i + 2, j + 35);
+        {1, 22},
+        {1, 24},
 
-        set_alive(b, i + 3, j + 11);
-        set_alive(b, i + 3, j + 15);
-        set_alive(b, i + 3, j + 20);
-        set_alive(b, i + 3, j + 21);
-        set_alive(b, i + 3, j + 34);
-        set_alive(b, i + 3, j + 35);
+        {2, 12},
+        {2, 13},
+        {2, 20},
+        {2, 21},
+        {2, 34},
+        {2, 35},
 
-        set_alive(b, i + 4, j);
-        set_alive(b, i + 4, j + 1);
-        set_alive(b, i + 4, j + 10);
-        set_alive(b, i + 4, j + 16);
-        set_alive(b, i + 4, j + 20);
-        set_alive(b, i + 4, j + 21);
+        {3, 11},
+        {3, 15},
+        {3, 20},
+        {3, 21},
+        {3, 34},
+        {3, 35},
 
-        set_alive(b, i + 5, j);
-        set_alive(b, i + 5, j + 1);
-        set_alive(b, i + 5, j + 10);
-        set_alive(b, i + 5, j + 14);
-        set_alive(b, i + 5, j + 16);
-        set_alive(b, i + 5, j + 17);
-        set_alive(b, i + 5, j + 22);
-        set_alive(b, i + 5, j + 24);
+        {4, 0},
+        {4, 1},
+        {4, 10},
+        {4, 16},
+        {4, 20},
+        {4, 21},
 
-        set_alive(b, i + 6, j + 10);
-        set_alive(b, i + 6, j + 16);
-        set_alive(b, i + 6, j + 24);
+        {5, 0},
+        {5, 1},
+        {5, 10},
+        {5, 14},
+        {5, 16},
+        {5, 17},
+        {5, 22},
+        {5, 24},
 
-        set_alive(b, i + 7, j + 11);
-        set_alive(b, i + 7, j + 15);
+        {6, 10},
+        {6, 16},
+        {6, 24},
+              
+        {7, 11},
+        {7, 15},
+              
+        {8, 12},
+        {8, 13},
+    };
 
-        set_alive(b, i + 8, j + 12);
-        set_alive(b, i + 8, j + 13);
+ 
+    size_t cells = sizeof(offsets) / sizeof(int[2]);
 
+    if (h_mirror) {
+        for (size_t k = 0; k < cells; k++) {
+            offsets[k][1] = w - 1 - offsets[k][1];
+        }
     }
-}
 
+    if (is_valid_position(b, i, j, w, h)) {
+        for (size_t k = 0; k < cells; k++) {
+            set_alive(b, i + offsets[k][0], j + offsets[k][1]);
+        }
+    }
+ }
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 

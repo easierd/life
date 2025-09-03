@@ -28,7 +28,8 @@ int main(void) {
         return EXIT_FAILURE;
     }
 
-    gosper_glider_gun(&b, 15, 15);
+    gosper_glider_gun(&b, 15, 10, false);
+    gosper_glider_gun(&b, 15, 100, true);
 
     screen_print_board(&b);
     for (int i = 0; i < ITERATIONS; i++) {

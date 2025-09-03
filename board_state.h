@@ -17,7 +17,7 @@
  *    ()()()
  *
  */
-void glider(Board* b, size_t i, size_t j);
+void glider(Board* b, size_t i, size_t j, bool h_mirror);
 
 
 /* insert a blinker into the board at position i, j
@@ -73,7 +73,7 @@ void pentadecathlon(Board* b, size_t i, size_t j);
  *                         ()()
  *
  */
-void gosper_glider_gun(Board *b, size_t i, size_t j);
+void gosper_glider_gun(Board *b, size_t i, size_t j, bool h_mirror);
 
 
 
