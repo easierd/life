@@ -73,12 +73,14 @@ void erase_cell(int i, int j) {
 
 
 void screen_print_board(const Board* b) {
-    int rows = b->rows;
-    int cols = b->cols;
+    int rowoffset = 10;
+    int coloffset = 10;
+    int rows = winrows();
+    int cols = wincols();
     
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            if (board_is_alive(b, i, j)) {
+            if (board_is_alive(b, i + rowoffset, j + coloffset)) {
                 put_cell(i, j);
             } else {
                 erase_cell(i, j);

@@ -12,7 +12,7 @@ typedef struct {
 
 
 // return true if initialization is successful
-bool board_init(Board*, size_t, size_t);
+bool board_init(Board*);
 
 void iteration(Board*);
 

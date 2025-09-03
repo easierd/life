@@ -1,4 +1,5 @@
 #include "board.h"
+#include "screen.h"
 
 #include<stdlib.h>
 #include<stdio.h>
@@ -11,16 +12,16 @@ void print_alloc_error() {
 }
 
 
-bool board_init(Board* b, size_t rows, size_t cols) {
-    b->rows = rows;
-    b->cols = cols;
-    b->cells = calloc(rows * cols, sizeof(bool));
+bool board_init(Board* b) {
+    b->rows = winrows() * 2;
+    b->cols = wincols() * 2;
+    b->cells = calloc(b->rows * b->cols, sizeof(bool));
     if (b->cells == NULL) {
         print_alloc_error();
         return false;
     }
 
-    b->prev_state = calloc(rows * cols, sizeof(bool));
+    b->prev_state = calloc(b->rows * b->cols, sizeof(bool));
     if (b->prev_state == NULL) {
         free(b->cells);
         print_alloc_error();
@@ -57,7 +58,6 @@ void iteration(Board* b) {
     if (b->prev_state == NULL) {
         return;
     }
-
 
     for (size_t i = 0; i < b->rows; i++) {
         for (size_t j = 0; j < b->cols; j++) {

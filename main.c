@@ -20,14 +20,15 @@ void sigint_handler(int) {
 
 int main(void) {
     signal(SIGINT, sigint_handler);
+
     screen_init();    
 
     Board b;
-    if (!board_init(&b, winrows(), wincols())) {
+    if (!board_init(&b)) {
         return EXIT_FAILURE;
     }
 
-    gosper_glider_gun(&b, 10, 10);
+    gosper_glider_gun(&b, 15, 15);
 
     screen_print_board(&b);
     for (int i = 0; i < ITERATIONS; i++) {
