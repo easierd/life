@@ -4,8 +4,32 @@
 
 #include "board_state.h"
 
+
+typedef struct Piece {
+    size_t width;
+    size_t height;
+    size_t cells;
+    int (*offsets)[2];
+} Piece;
+
+
 bool is_valid_position(Board*b, size_t i, size_t j, size_t width, size_t height) {
     return (i < b->rows - height) && (j < b->cols - width);
+}
+
+
+void put_piece(Board *b, size_t i, size_t j, Piece *p, bool h_mirror) {
+    if (h_mirror) {
+        for (size_t k = 0; k < p->cells; k++) {
+            p->offsets[k][1] = p->width - 1 - p->offsets[k][1];
+        }
+    }
+
+    if (is_valid_position(b, i, j, p->width, p->height)) {
+        for (size_t k = 0; k < p->cells; k++) {
+            set_alive(b, i + p->offsets[k][0], j + p->offsets[k][1]);
+        }
+    }
 }
 
 
@@ -20,20 +44,10 @@ void glider(Board* b, size_t i, size_t j, bool h_mirror) {
         {2, 1},
         {2, 2},
     };
-
     size_t cells = sizeof(offsets) / sizeof(int[2]);
+    Piece p = {w, h, cells, offsets};
 
-    if (h_mirror) {
-        for (size_t k = 0; k < cells; k++) {
-            offsets[k][1] = w - 1 - offsets[k][1];
-        }
-    }
-
-    if (is_valid_position(b, i, j, w, h)) {
-        for (size_t k = 0; k < cells; k++) {
-            set_alive(b, i + offsets[k][0], j + offsets[k][1]);
-        }
-    }
+    put_piece(b, i, j, &p, h_mirror);
 
 }
 
@@ -110,9 +124,6 @@ void pentadecathlon(Board* b, size_t i, size_t j) {
 }
 
 
-#define GOSPER_GLIDER_GUN_WIDTH 36
-#define GOSPER_GLIDER_GUN_HEIGHT 9
-
 void gosper_glider_gun(Board *b, size_t i, size_t j, bool h_mirror) {
 
     size_t h = 36;
@@ -167,17 +178,9 @@ void gosper_glider_gun(Board *b, size_t i, size_t j, bool h_mirror) {
  
     size_t cells = sizeof(offsets) / sizeof(int[2]);
 
-    if (h_mirror) {
-        for (size_t k = 0; k < cells; k++) {
-            offsets[k][1] = w - 1 - offsets[k][1];
-        }
-    }
+    Piece p = {w, h, cells, offsets};
+    put_piece(b, i, j, &p, h_mirror);
 
-    if (is_valid_position(b, i, j, w, h)) {
-        for (size_t k = 0; k < cells; k++) {
-            set_alive(b, i + offsets[k][0], j + offsets[k][1]);
-        }
-    }
  }
  
  
